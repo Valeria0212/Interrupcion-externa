@@ -10,13 +10,12 @@ Antes de indicar los pasos para habilitar la interrupcion externa se deben confi
 •Para empezar se habilitan los relojes periféricos del GPIOA (leds) y GPIOC (botón)
 
 ![relojes](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojes.jpg)
-RCC->AHB2ENR = 0x00000005;
 
 
 ```
        // Se habilitan los relojes perifericos del GPIOA y GPIOC
  	RCC->AHB2ENR = 0x00000005;
-```
+
 	// Configuracion puerto A
 	GPIOA->MODER &= 0xABFFFFFF;// resetea valores del puerto A
 	GPIOA->MODER &= 0xFFFF5005;// Pone los pines a0, a1, a6, a7 como salida
