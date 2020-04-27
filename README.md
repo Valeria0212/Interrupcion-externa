@@ -7,7 +7,7 @@ El ejercico consiste en poner como salida los pines 0, 1, 6 y 7 del puerto A (en
 Antes de indicar los pasos para habilitar la interrupcion externa se deben configurar los pines de los puertos A y C, asi: (esta parte va dentro del main)
 
 ### Habilitacion de los relojes
-•Para empezar se habilitan los relojes periféricos del GPIOA (leds) y GPIOC (botón)
+•Para empezar se habilitan los relojes periféricos del GPIOA (leds) y GPIOC (botón), como queremos habilitar estos puertos, usamos el registro AHB2ENR que es el que los habilita:
 
 ![relojes](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojes.jpg)
 
@@ -26,7 +26,10 @@ Antes de indicar los pasos para habilitar la interrupcion externa se deben confi
 	// Configuracion puerto C
 	GPIOC->MODER &= 0xFFFFFFFF;// resetea valores del puerto C
 	GPIOC->MODER &= 0xF3FFFFFF;// Pone el pin C13 como entrada
+```
+https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojint.jpg
 
+```
 	// Se habilita el reloj SYSCFG (necesario para la interrupcion)
 	RCC->APB2ENR = 0x00000001; //registro de habilitación de reloj periférico
 ```
