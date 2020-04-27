@@ -4,7 +4,11 @@ En este documento se explicará paso por paso como realizar una interupcion exte
 
 El ejercico consiste en poner como salida los pines 0, 1, 6 y 7 del puerto A (en estos se conectaran leds), y como entrada el pin 13 del puerto C (allí está conectado el pulsador de la tarjeta) y cada que se detecte una interrupcion externa, en este caso cada que se presione el pulsador, se activaran diferentes pines del puerto A.
 
-Antes de indicar los pasos para habilitar la interrupcion externa se deben configurar los pines, asi: (esta parte va dentro del main)
+Antes de indicar los pasos para habilitar la interrupcion externa se deben configurar los pines de los puertos A y C, asi: (esta parte va dentro del main)
+
+### Habilitacion de los relojes
+
+
 ```
        // Se habilitan los relojes perifericos del GPIOA y GPIOC
  	RCC->AHB2ENR = 0x00000005;
