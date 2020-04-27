@@ -53,7 +53,7 @@ Y luego se vincula el pin 13 (el de la interrupcion) con el EXTI
 	SYSCFG->EXTICR[3] |= 0x0020;	// Write 0002 to map PC13 to EXTI4
 ```
 
-Ahora, para configurar una línea como fuente de interrupción, utilice el siguiente procedimiento tomado de [STM32](file:///C:/Users/CONSTRUVILLA/Downloads/RM0351%20Reference%20manual%20STM32L4x5%20and%20STM32L4x6%20advanced%20Arm-based%2032-bit%20MCUs.pdf), pagina 402:
+Ahora, para configurar una línea como fuente de interrupción, utilice el siguiente procedimiento tomado de [STM32](https://app.luminpdf.com/viewer/5ea76e0e1f147d0017bbb725), pagina 402:
 1. Configure el bit de máscara correspondiente en el registro EXTI_IMR.
 2. Configure los bits de selección de disparador de la línea de interrupción (EXTI_RTSR y EXTI_FTSR).
 3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al
