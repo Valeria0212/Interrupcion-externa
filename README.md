@@ -27,12 +27,6 @@ Antes de indicar los pasos para habilitar la interrupcion externa se deben confi
 	GPIOC->MODER &= 0xFFFFFFFF;// resetea valores del puerto C
 	GPIOC->MODER &= 0xF3FFFFFF;// Pone el pin C13 como entrada
 ```
-https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojint.jpg
-
-```
-	// Se habilita el reloj SYSCFG (necesario para la interrupcion)
-	RCC->APB2ENR = 0x00000001; //registro de habilitación de reloj periférico
-```
 Para entender mejor la configuracion de pines da click [aquí](https://github.com/MarianaEstrada/Guia_GPIO/blob/master/README.md).
 
 Ahora pasamos a la configuracion de la interrupcion externa, no sin antes haer una brebe descripcion.
@@ -47,7 +41,7 @@ También se proporciona un bit de máscara en el controlador de configuración d
 
 Para habilitar esta bit de mascara se hace uso del registro APB2ENR:
 
-!(relojint)[https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojint.jpg]
+![relojint](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojint.jpg)
 
 ```
 	// Se habilita el bit de mascara SYSCFG (necesario para la interrupcion)
