@@ -7,12 +7,16 @@ El ejercico consiste en poner como salida los pines 0, 1, 6 y 7 del puerto A (en
 Antes de indicar los pasos para habilitar la interrupcion externa se deben configurar los pines de los puertos A y C, asi: (esta parte va dentro del main)
 
 ### Habilitacion de los relojes
+•Para empezar se habilitan los relojes periféricos del GPIOA (leds) y GPIOC (botón)
+
+![relojes](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojes.jpg)
+RCC->AHB2ENR = 0x00000005;
 
 
 ```
        // Se habilitan los relojes perifericos del GPIOA y GPIOC
  	RCC->AHB2ENR = 0x00000005;
-
+```
 	// Configuracion puerto A
 	GPIOA->MODER &= 0xABFFFFFF;// resetea valores del puerto A
 	GPIOA->MODER &= 0xFFFF5005;// Pone los pines a0, a1, a6, a7 como salida
@@ -30,4 +34,4 @@ Para entender mejor la configuracion de pines da click [aquí](https://github.co
 
 Para las líneas de interrupción configurables, la línea de interrupción debe configurarse y habilitarse para generar una interrupción. Esto se hace programando los dos registros de disparo con la detección de borde deseada y habilitando la solicitud de interrupción escribiendo un "1" en el bit correspondiente en el registro de la máscara de interrupción. Cuando el borde seleccionado se produce en la línea de interrupción, se genera una solicitud de interrupción. También se establece el bit pendiente correspondiente a la línea de interrupción. Esta solicitud se borra escribiendo un "1" en el registro pendiente.
 
-![reloges](https://github.com/Valeria0212/Interrupcion-externa/blob/master/reloges.jpg)
+
