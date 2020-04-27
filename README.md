@@ -11,11 +11,16 @@ Antes de indicar los pasos para habilitar la interrupcion externa se deben confi
 
 ![relojes](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojes.jpg)
 
+1010 en hexadecimal es 5
 
 ```
        // Se habilitan los relojes perifericos del GPIOA y GPIOC
  	RCC->AHB2ENR = 0x00000005;
+```
 
+•Se configuran los puertos
+
+```
 	// Configuracion puerto A
 	GPIOA->MODER &= 0xABFFFFFF;// resetea valores del puerto A
 	GPIOA->MODER &= 0xFFFF5005;// Pone los pines a0, a1, a6, a7 como salida
