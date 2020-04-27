@@ -30,4 +30,4 @@ Para entender mejor la configuracion de pines da click [aquí](https://github.co
 
 Para las líneas de interrupción configurables, la línea de interrupción debe configurarse y habilitarse para generar una interrupción. Esto se hace programando los dos registros de disparo con la detección de borde deseada y habilitando la solicitud de interrupción escribiendo un "1" en el bit correspondiente en el registro de la máscara de interrupción. Cuando el borde seleccionado se produce en la línea de interrupción, se genera una solicitud de interrupción. También se establece el bit pendiente correspondiente a la línea de interrupción. Esta solicitud se borra escribiendo un "1" en el registro pendiente.
 
-
+![reloges](https://raw.githubusercontent.com/parzibyte/WaterPy/master/assets/ImagenV1.png)
