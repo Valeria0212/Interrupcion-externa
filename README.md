@@ -41,4 +41,17 @@ Ahora pasamos a la configuracion de la interrupcion externa, no sin antes haer u
 
 Para las líneas de interrupción configurables, la línea de interrupción debe configurarse y habilitarse para generar una interrupción. Esto se hace programando los dos registros de disparo con la detección de borde deseada y habilitando la solicitud de interrupción escribiendo un "1" en el bit correspondiente en el registro de la máscara de interrupción. Cuando el borde seleccionado se produce en la línea de interrupción, se genera una solicitud de interrupción. También se establece el bit pendiente correspondiente a la línea de interrupción. Esta solicitud se borra escribiendo un "1" en el registro pendiente.
 
+## Habilitar y borrar interrupciones de excepción de FPU
+Las banderas de excepción FPU están generando una interrupción a través del controlador de interrupción. La interrupción de la FPU se controla globalmente a través del controlador de interrupción.
+También se proporciona un bit de máscara en el controlador de configuración del sistema (SYSCFG), que permite habilitar / deshabilitar individualmente cada generación de interrupción de bandera de FPU.
+
+Para habilitar esta bit de mascara se hace uso del registro APB2ENR:
+
+!(relojint)[https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/relojint.jpg]
+
+```
+	// Se habilita el bit de mascara SYSCFG (necesario para la interrupcion)
+	RCC->APB2ENR = 0x00000001; //registro de habilitación 
+```
+
 
