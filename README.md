@@ -29,13 +29,13 @@ Antes de indicar los pasos para habilitar la interrupcion externa se deben confi
 ```
 Para entender mejor la configuracion de pines da click [aquí](https://github.com/MarianaEstrada/Guia_GPIO/blob/master/README.md).
 
-Ahora pasamos a la configuracion de la interrupcion externa, no sin antes haer una brebe descripcion.
+Ahora pasamos a la configuracion de la interrupcion externa, no sin antes hacer una brebe descripcion.
 
-## Descripcion del controlador extendido de interrupciones y eventos -EXTI 
+### Descripcion del controlador extendido de interrupciones y eventos -EXTI 
 
 Para las líneas de interrupción configurables, la línea de interrupción debe configurarse y habilitarse para generar una interrupción. Esto se hace programando los dos registros de disparo con la detección de borde deseada y habilitando la solicitud de interrupción escribiendo un "1" en el bit correspondiente en el registro de la máscara de interrupción. Cuando el borde seleccionado se produce en la línea de interrupción, se genera una solicitud de interrupción. También se establece el bit pendiente correspondiente a la línea de interrupción. Esta solicitud se borra escribiendo un "1" en el registro pendiente.
 
-## Habilitar y borrar interrupciones de excepción de FPU
+### Habilitar y borrar interrupciones de excepción de FPU
 Las banderas de excepción FPU están generando una interrupción a través del controlador de interrupción. La interrupción de la FPU se controla globalmente a través del controlador de interrupción.
 También se proporciona un bit de máscara en el controlador de configuración del sistema (SYSCFG), que permite habilitar / deshabilitar individualmente cada generación de interrupción de bandera de FPU.
 
@@ -47,5 +47,16 @@ Para habilitar esta bit de mascara se hace uso del registro APB2ENR:
 	// Se habilita el bit de mascara SYSCFG (necesario para la interrupcion)
 	RCC->APB2ENR = 0x00000001; //registro de habilitación 
 ```
+Y luego se vincula el pin 13 (el de la interrupcion) con el EXTI 
+```
+	// Escribiendo un 0b0010 en el pin 13, vincula PC13 con EXTI4
+	SYSCFG->EXTICR[3] |= 0x0020;	// Write 0002 to map PC13 to EXTI4
+```
 
+Ahora, para configurar una línea como fuente de interrupción, utilice el siguiente procedimiento tomado de [STM32](file:///C:/Users/CONSTRUVILLA/Downloads/RM0351%20Reference%20manual%20STM32L4x5%20and%20STM32L4x6%20advanced%20Arm-based%2032-bit%20MCUs.pdf), pagina 402:
+1. Configure el bit de máscara correspondiente en el registro EXTI_IMR.
+2. Configure los bits de selección de disparador de la línea de interrupción (EXTI_RTSR y EXTI_FTSR).
+3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al
+EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correcta
+admitido
 
