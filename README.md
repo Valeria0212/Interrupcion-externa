@@ -82,5 +82,28 @@ El pin 13 (el del pulsador) esta conectado con el manejador para pines conectado
 	NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 ```
+Por ultimo se configura la funcion que se va a realizar al detectarse una interrupcion, para esta tenemos en cuenta que debemos limpiar el bit que se activa al detectarse una interrupción
+
+![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/PR.jpg)
+
+```
+void EXTI15_10_IRQHandler(void)
+{
+
+	//pregunta si la interrupcion viene del EXTI13 (BOTON)
+	if(EXTI->PR1 & (1 <<13)) {
+			GPIOA->ODR ^= 0x0090;
+			GPIOA->ODR ^= 0x0041;
 
 
+			//Se debe limpiar el bit de la interrupcion
+			//para esto se pone un 1 en este bit (13)
+			EXTI->PR1 = 0x00002000;
+	}
+
+
+
+
+}
+
+```
