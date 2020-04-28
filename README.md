@@ -160,7 +160,7 @@ int main(void)
 	// enable EXT0 IRQ from NVIC
 	NVIC_EnableIRQ(EXTI15_10_IRQn);
 
-	//GPIOA->ODR |=0x00D3;
+	
 	GPIOA->ODR = 0x0041;
   while(1)
   {
