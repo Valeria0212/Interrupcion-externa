@@ -58,14 +58,20 @@ Ahora, para configurar una línea como fuente de interrupción, se utiliza el si
 ![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/IMR.jpg)
 
 La IMR1 por que está el bit de interés (13)
-
+```
+	// Mask the used external interrupt numbers. pin 13 boton
+	EXTI->IMR1 |= 0x00002000;	// Mask EXTI4
+```
 
 2. Configure los bits de selección de disparador de la línea de interrupción (EXTI_RTSR y EXTI_FTSR).
 
 ![RTS](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/RTS.jpg)
 
 La RTSR1 por que está el bit de interés (13)
-
+```
+	// Choose either rising edge trigger (RTSR1) or falling edge trigger (FTSR1)
+	EXTI->RTSR1 |= 0x00002000;	// Enable rising edge trigger on EXTI4
+```
 3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correctamente admitida.
 
 El gestor de interrupciones es quien se encarga de lidiar con eventos asincrónicos. La mayoría de estos eventos vienen de periféricos de hardware. Por ejemplo, un temporizador que alcanza un valor de período configurado, o un puerto UART que advierte sobre la llegada de datos. Otros son originados por el “mundo exterior”, por ejemplo, el usuario presiona un interruptor que hace que se genere una interrupción.
@@ -89,7 +95,6 @@ Por ultimo se configura la funcion que se va a realizar al detectarse una interr
 ```
 void EXTI15_10_IRQHandler(void)
 {
-
 	//pregunta si la interrupcion viene del EXTI13 (BOTON)
 	if(EXTI->PR1 & (1 <<13)) {
 			GPIOA->ODR ^= 0x0090;
@@ -100,10 +105,69 @@ void EXTI15_10_IRQHandler(void)
 			//para esto se pone un 1 en este bit (13)
 			EXTI->PR1 = 0x00002000;
 	}
+}
+```
+### El codigo completo sería:
+```
+int main(void);
+
+/*************************************************
+* external interrupt handler
+*************************************************/
+void EXTI15_10_IRQHandler(void)
+{
+	//pregunta si la interrupcion viene del EXTI13 (BOTON)
+	if(EXTI->PR1 & (1 <<13)) {
+			GPIOA->ODR ^= 0x0090;
+			GPIOA->ODR ^= 0x0041;
+
+			//Se debe limpiar el bit de la interrupcion
+			//para esto se pone un 1 en este bit (13)
+			EXTI->PR1 = 0x00002000;
+	}
+}
+
+int main(void)
+{
+	// Se habilitan los relojes perifericos del GPIOA y GPIOC
+ 	RCC->AHB2ENR = 0x00000005;
+
+	// Configuracion puerto A
+	GPIOA->MODER &= 0xABFFFFFF;	// resetea valores del puerto A
+	GPIOA->MODER &= 0xFFFF5005;	// Pone los pines a0, a1, a6, a7 como salida
+
+	// Configuracion puerto C
+	GPIOC->MODER &= 0xFFFFFFFF;	// resetea valores del puerto C
+	GPIOC->MODER &= 0xF3FFFFFF;	// Pone el pin C13 como entrada
+
+	// Se habilita el bit de mascara SYSCFG (necesario para la interrupcion)
+	RCC->APB2ENR = 0x00000001; //registro de habilitación 
+
+	/* tie push button at PC13 to EXTI4 */
+	// EXTI4 can be configured for each GPIO module.
+	// EXTICR1: 0b XXXX XXXX XXXX 0000
+	//             pin3 pin2 pin1 pin0
+	//
+	//
+	// Escribiendo un 0b0010 en el pin 13, vincula PC13 con EXT4
+	SYSCFG->EXTICR[3] |= 0x0020;	// Write 0002 to map PC13 to EXTI4
+	// Choose either rising edge trigger (RTSR1) or falling edge trigger (FTSR1)
+	EXTI->RTSR1 |= 0x00002000;	// Enable rising edge trigger on EXTI4
+	// Mask the used external interrupt numbers. pin 13 boton
+	EXTI->IMR1 |= 0x00002000;	// Mask EXTI4
+	// Set Priority for each interrupt request.  pin 13 boton
+	NVIC->IP[EXTI15_10_IRQn] = 0x10;	// Priority level 1
+	// enable EXT0 IRQ from NVIC
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
+
+	//GPIOA->ODR |=0x00D3;
+	GPIOA->ODR = 0x0041;
+  while(1)
+  {
 
 
-
-
+  }
+  /* USER CODE END 3 */
 }
 
 ```
