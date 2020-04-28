@@ -66,7 +66,10 @@ La IMR1 por que está el bit de interés (13)
 
 La RTSR1 por que está el bit de interés (13)
 
-3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al
-EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correcta
-admitido
+3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correctamente admitida.
 
+El gestor de interrupciones es quien se encarga de lidiar con eventos asincrónicos. La mayoría de estos eventos vienen de periféricos de hardware. Por ejemplo, un temporizador que alcanza un valor de período configurado, o un puerto UART que advierte sobre la llegada de datos. Otros son originados por el “mundo exterior”, por ejemplo, el usuario presiona un interruptor que hace que se genere una interrupción.
+
+Una vez seleccionado el pin que desea usar se debe manejar la interrupción de alguna manera. Este proceso se describe a continuación y para hacerlo debemos tener en cuenta la siguiente tabla
+
+![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/IRQ.JPG)
