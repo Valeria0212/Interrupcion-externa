@@ -73,3 +73,14 @@ El gestor de interrupciones es quien se encarga de lidiar con eventos asincróni
 Una vez seleccionado el pin que desea usar se debe manejar la interrupción de alguna manera. Este proceso se describe a continuación y para hacerlo debemos tener en cuenta la siguiente tabla
 
 ![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/IRQ.JPG)
+
+El pin 13 (el del pulsador) esta conectado con el manejador para pines conectados a la línea 10 a 15, por esto se pone como prioridad este manejador de interrupcion y a su vez se habilita, asi:
+```
+	// Establecer prioridad para cada solicitud de interrupción.  pin 13 boton
+	NVIC->IP[EXTI15_10_IRQn] = 0x10;	// Priority level 1
+	// enable EXTI15_10 IRQ from NVIC
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
+
+```
+
+
