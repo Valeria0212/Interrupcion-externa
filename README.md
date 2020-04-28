@@ -84,7 +84,7 @@ El pin 13 (el del pulsador) esta conectado con el manejador para pines conectado
 ```
 Por ultimo se configura la funcion que se va a realizar al detectarse una interrupcion, para esta tenemos en cuenta que debemos limpiar el bit que se activa al detectarse una interrupción
 
-![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/PR.jpg)
+![PR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/PR.jpg)
 
 ```
 void EXTI15_10_IRQHandler(void)
