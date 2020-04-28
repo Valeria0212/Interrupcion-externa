@@ -172,3 +172,5 @@ int main(void)
 }
 
 ```
+### Tarea
+Realizar una interrupcion externa con un pin diferente al del botón 
