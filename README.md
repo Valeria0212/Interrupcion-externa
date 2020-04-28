@@ -37,7 +37,7 @@ Para las líneas de interrupción configurables, la línea de interrupción debe
 
 ### Habilitar y borrar interrupciones de excepción de FPU
 Las banderas de excepción FPU están generando una interrupción a través del controlador de interrupción. La interrupción de la FPU se controla globalmente a través del controlador de interrupción.
-También se proporciona un bit de máscara en el controlador de configuración del sistema (SYSCFG), que permite habilitar / deshabilitar individualmente cada generación de interrupción de bandera de FPU.
+También se proporciona un bit de máscara en el controlador de configuración del sistema **(SYSCFG)**, que permite habilitar / deshabilitar individualmente cada generación de interrupción de bandera de FPU.
 
 Para habilitar esta bit de mascara se hace uso del registro APB2ENR:
 
@@ -54,7 +54,7 @@ Y luego se vincula el pin 13 (el de la interrupcion) con el EXTI
 ```
 
 Ahora, para configurar una línea como fuente de interrupción, se utiliza el siguiente procedimiento- tomado de [STM32](https://app.luminpdf.com/viewer/5ea76e0e1f147d0017bbb725), pagina 402:
-1. Configure el bit de máscara correspondiente en el registro EXTI_IMR.
+**1.** Configure el bit de máscara correspondiente en el registro **EXTI_IMR.**
 ![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/IMR.jpg)
 
 La IMR1 por que está el bit de interés (13)
@@ -63,7 +63,7 @@ La IMR1 por que está el bit de interés (13)
 	EXTI->IMR1 |= 0x00002000;	// Mask EXTI4
 ```
 
-2. Configure los bits de selección de disparador de la línea de interrupción (EXTI_RTSR y EXTI_FTSR).
+**2.** Configure los bits de selección de disparador de la línea de interrupción **(EXTI_RTSR y EXTI_FTSR).**
 
 ![RTS](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/RTS.jpg)
 
@@ -72,7 +72,7 @@ La RTSR1 por que está el bit de interés (13)
 	// Choose either rising edge trigger (RTSR1) or falling edge trigger (FTSR1)
 	EXTI->RTSR1 |= 0x00002000;	// Enable rising edge trigger on EXTI4
 ```
-3. Configure los bits de habilitación y máscara que controlan el canal NVIC IRQ asignado al EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correctamente admitida.
+**3.** Configure los bits de habilitación y máscara que controlan el canal **NVIC IRQ** asignado al EXTI para que una interrupción proveniente de una de las líneas EXTI pueda ser correctamente admitida.
 
 El gestor de interrupciones es quien se encarga de lidiar con eventos asincrónicos. La mayoría de estos eventos vienen de periféricos de hardware. Por ejemplo, un temporizador que alcanza un valor de período configurado, o un puerto UART que advierte sobre la llegada de datos. Otros son originados por el “mundo exterior”, por ejemplo, el usuario presiona un interruptor que hace que se genere una interrupción.
 
@@ -89,9 +89,6 @@ El pin 13 (el del pulsador) esta conectado con el manejador para pines conectado
 
 ```
 Por ultimo se configura la funcion que se va a realizar al detectarse una interrupcion, para esta tenemos en cuenta que debemos limpiar el bit que se activa al detectarse una interrupción
-
-![PR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/PR.JPG)
-
 ```
 void EXTI15_10_IRQHandler(void)
 {
@@ -107,6 +104,9 @@ void EXTI15_10_IRQHandler(void)
 	}
 }
 ```
+![PR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/PR.JPG)
+
+
 ### El codigo completo sería:
 ```
 int main(void);
