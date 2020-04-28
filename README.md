@@ -54,6 +54,7 @@ Y luego se vincula el pin 13 (el de la interrupcion) con el EXTI
 ```
 
 Ahora, para configurar una línea como fuente de interrupción, se utiliza el siguiente procedimiento- tomado de [STM32](https://app.luminpdf.com/viewer/5ea76e0e1f147d0017bbb725), pagina 402:
+
 **1.** Configure el bit de máscara correspondiente en el registro **EXTI_IMR.**
 ![IMR](https://github.com/Valeria0212/Interrupcion-externa/blob/master/Imagenes/IMR.jpg)
 
